@@ -1,0 +1,60 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+# Cabeçalhos para habilitar a compressão em produção
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "text/html; charset=UTF-8"
+    Cache-Control = "public, max-age=2592000"
+
+# Configuração específica para servir arquivos estáticos comprimidos
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "application/javascript; charset=UTF-8"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Encoding = "br"
+    Content-Type = "text/css; charset=UTF-8"
+    Cache-Control = "public, max-age=31536000"
+
+# Fallback para browsers que não suportam Brotli
+[[redirects]]
+  from = "/*.js"
+  to = "/:splat.js.gz"
+  status = 200
+  force = false
+  conditions = {Accept-Encoding = "gzip"}
+  headers = {Content-Encoding = "gzip", Content-Type = "application/javascript; charset=UTF-8"}
+
+[[redirects]]
+  from = "/*.css"
+  to = "/:splat.css.gz"
+  status = 200
+  force = false
+  conditions = {Accept-Encoding = "gzip"}
+  headers = {Content-Encoding = "gzip", Content-Type = "text/css; charset=UTF-8"} 
