@@ -1,0 +1,446 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	image?: string;
+	canonicalURL?: URL | string;
+	type?: 'website' | 'article';
+}
+
+const { 
+	title, 
+	description = "Estratégias de Aviator - Aprenda como lucrar diariamente com análises simples e eficazes", 
+	image = "/teste.avif",
+	canonicalURL,
+	type = "website"
+} = Astro.props;
+
+// Site URL fallback para casos onde Astro.site é undefined (ambiente de produção)
+const siteUrl = Astro.site || new URL("https://aviator-app.vercel.app/");
+
+// Garante que a URL canônica seja uma string completa com fallback seguro
+let canonicalURLString;
+try {
+	canonicalURLString = canonicalURL 
+		? (canonicalURL instanceof URL 
+			? canonicalURL.toString() 
+			: new URL(canonicalURL, siteUrl).toString())
+		: new URL(Astro.url.pathname, siteUrl).toString();
+} catch (e) {
+	// Fallback seguro se algo der errado
+	canonicalURLString = siteUrl.toString();
+}
+
+// Garante que a URL da imagem seja completa com fallback seguro
+let ogImageURL;
+try {
+	ogImageURL = image.startsWith('http') 
+		? image 
+		: new URL(image, siteUrl).toString();
+} catch (e) {
+	// Fallback seguro se algo der errado
+	ogImageURL = image.startsWith('/') 
+		? siteUrl.toString().replace(/\/$/, '') + image 
+		: siteUrl.toString().replace(/\/$/, '') + '/' + image;
+}
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Inicialização do dataLayer antes do GTM -->
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			
+			// Verificar se estamos em ambiente de desenvolvimento (localhost)
+			const isLocalhost = window.location.hostname === 'localhost' || 
+								window.location.hostname === '127.0.0.1';
+			
+			// Configurar o GA para não gerar erros CORS em ambiente local
+			if (isLocalhost) {
+				window.gtag_transport_url = 'https://www.google-analytics.com';
+				// Isso ajuda a evitar alguns erros de conexão em ambiente de desenvolvimento
+				window.gtag_disable_cookie_storage = true;
+			}
+		</script>
+		
+		<!-- Google Tag Manager -->
+		<script is:inline>(function(w,d,s,l,i){
+			w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+			
+			// Se estiver em localhost, adiciona parâmetro para reduzir erros CORS
+			if (w.location.hostname === 'localhost' || w.location.hostname === '127.0.0.1') {
+				j.src += '&local=1';
+			}
+			
+			f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-TL6TJXNF');</script>
+		<!-- End Google Tag Manager -->
+		
+		<!-- SEO primário -->
+		<title>{title}</title>
+		<link rel="canonical" href={canonicalURLString} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={canonicalURLString} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageURL} />
+		<meta property="og:locale" content="pt_BR" />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURLString} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImageURL} />
+		
+		<!-- OTIMIZAÇÃO LCP: Preload e prefetch para recursos críticos -->
+		<link rel="preload" href="/teste.avif" as="image" fetchpriority="high" />
+		
+		<!-- Otimização para fontes com display swap -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+		
+		<!-- Resource hints para melhorar performance -->
+		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+		
+		<!-- Segurança e otimização -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="theme-color" content="#000000" />
+		
+		<!-- Fallback para fontes caso JS esteja desativado -->
+		<noscript>
+			<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+		</noscript>
+		
+		<!-- Preload de CSS crítico inline para melhorar LCP e evitar FOUC -->
+		<style>
+			/* CSS crítico injetado diretamente para evitar bloqueio de renderização */
+			:root {
+				--accent: 136, 58, 234;
+				--accent-light: 224, 204, 250;
+				--accent-dark: 49, 10, 101;
+				--accent-gradient: linear-gradient(
+					45deg,
+					rgb(var(--accent)),
+					rgb(var(--accent-light)) 30%,
+					white 60%
+				);
+				
+				/* Variáveis de cores personalizadas */
+				--red-primary: #ff0000;
+				--red-dark: #8b0000;
+				--green-highlight: #33cc33;
+				--green-dark: #006600;
+				--green-bright: #00ff00;
+				--green-hover: #40dd40;
+				--blue-button: #29b6f6;
+				--blue-dark: #0277bd;
+				--blue-hover: #4fc3f7;
+				--blue-bright: #03a9f4;
+				--black-bg: #000000;
+				--white-text: #ffffff;
+			}
+			
+			body {
+				margin: 0;
+				padding: 0;
+				overflow-x: hidden;
+				line-height: 1.5;
+				color: var(--white-text);
+				background: var(--black-bg);
+				font-family: 'Montserrat', system-ui, sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TL6TJXNF"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		
+		<slot />
+		
+		<!-- Web Vitals para análise de performance -->
+		<script type="module">
+			// Carrega a biblioteca web-vitals quando o navegador estiver ocioso
+			const loadWebVitals = () => {
+				const loadWithFallback = () => {
+					// Usando a versão base do web-vitals
+					import('https://unpkg.com/web-vitals@3.3.0/dist/web-vitals.js?module')
+						.then(({ onCLS, onFID, onLCP }) => {
+							// Monitora e reporta métricas Core Web Vitals
+							onCLS(sendToAnalytics);
+							onFID(sendToAnalytics);
+							onLCP(sendToAnalytics);
+							console.log('Web Vitals carregado com sucesso');
+						})
+						.catch(error => {
+							// Tentar versão alternativa se a primeira falhar
+							console.warn('Tentando versão alternativa do web-vitals...');
+							import('https://unpkg.com/web-vitals@2.1.4/dist/web-vitals.js?module')
+								.then(({ onCLS, onFID, onLCP }) => {
+									onCLS(sendToAnalytics);
+									onFID(sendToAnalytics);
+									onLCP(sendToAnalytics);
+									console.log('Web Vitals (versão alternativa) carregado com sucesso');
+								})
+								.catch(err => {
+									// Falha silenciosa para não interromper a experiência do usuário
+									console.warn('Não foi possível carregar web-vitals, métricas de performance não serão coletadas');
+								});
+						});
+				};
+
+				if ('requestIdleCallback' in window) {
+					requestIdleCallback(() => loadWithFallback(), { timeout: 5000 });
+				} else {
+					// Fallback para browsers que não suportam requestIdleCallback
+					setTimeout(loadWithFallback, 5000);
+				}
+			};
+
+			// Função para enviar métricas para analytics
+			const sendToAnalytics = ({ name, delta, id, attribution }) => {
+				// Log das métricas para debugging
+				console.log(`Métrica: ${name} | Valor: ${delta}`);
+				
+				// Envio para endpoint de analytics (quando estiver disponível)
+				if (navigator.sendBeacon) {
+					const analyticsData = {
+						name,
+						value: delta,
+						id,
+						attribution: attribution ? JSON.stringify(attribution) : undefined,
+						page: window.location.pathname
+					};
+					
+					try {
+						// Exemplo de envio de dados (ativar quando o endpoint estiver pronto)
+						// navigator.sendBeacon('/api/vitals', JSON.stringify(analyticsData));
+					} catch (error) {
+						// Evitando erros no console
+					}
+				}
+			};
+			
+			// Carrega web vitals após o onload para priorizar conteúdo visível
+			if (document.readyState === 'complete') {
+				loadWebVitals();
+			} else {
+				window.addEventListener('load', loadWebVitals);
+			}
+		</script>
+		
+		<!-- Script para resolver problemas de CORS com o Google Analytics em ambiente local -->
+		<script is:inline>
+			// Executar após o carregamento da página
+			window.addEventListener('DOMContentLoaded', function() {
+				// Apenas em ambiente de desenvolvimento local
+				if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+					// Configurar variáveis específicas para o GA em ambiente local
+					window.ga_debug = {trace: false};
+					
+					// 1. Interceptar fetch para requisições de analytics
+					const originalFetch = window.fetch;
+					
+					window.fetch = function(resource, options) {
+						// Se a URL for do Google Analytics ou domínios relacionados ao GTM
+						if (typeof resource === 'string' && 
+							(resource.includes('google-analytics.com') || 
+							 resource.includes('analytics.google.com') || 
+							 resource.includes('api.iagomilionario.com/g/collect') ||
+							 resource.includes('stats.g.doubleclick.net'))) {
+						
+							// Modificar as opções para usar 'no-cors' e evitar erros CORS
+							options = options || {};
+							options.mode = 'no-cors';
+							
+							// Opcional: Log para debug (remover em produção)
+							console.debug('Interceptando requisição fetch de analytics em ambiente local');
+							
+							// Envolver em try/catch para evitar falhas
+							try {
+								return originalFetch(resource, options);
+							} catch (e) {
+								console.debug('Falha silenciosa em requisição de analytics (esperado em localhost)');
+								// Retornar uma resposta vazia para evitar erros
+								return Promise.resolve(new Response());
+							}
+						}
+						
+						// Para todas as outras requisições, manter o comportamento normal
+						return originalFetch.apply(this, arguments);
+					};
+					
+					// 2. Interceptar XMLHttpRequest para requisições de analytics
+					const OriginalXHR = window.XMLHttpRequest;
+					
+					function newXHR() {
+						const xhr = new OriginalXHR();
+						const originalOpen = xhr.open;
+						
+						// Interceptar o método open para detectar requisições de analytics
+						xhr.open = function(method, url) {
+							// Detectar se é uma URL de analytics
+							if (typeof url === 'string' && 
+								(url.includes('google-analytics.com') || 
+								 url.includes('analytics.google.com') || 
+								 url.includes('api.iagomilionario.com/g/collect') ||
+								 url.includes('stats.g.doubleclick.net'))) {
+							
+								// Silenciar erros para estas requisições
+								xhr.addEventListener('error', function(e) {
+									e.stopPropagation();
+									console.debug('Interceptando erro XMLHttpRequest de analytics em ambiente local');
+									return false;
+								});
+							}
+							
+							// Chamar o método original
+							return originalOpen.apply(xhr, arguments);
+						};
+						
+						return xhr;
+					}
+					
+					// Substituir o construtor XMLHttpRequest global
+					window.XMLHttpRequest = newXHR;
+					
+					console.info('Ambiente de desenvolvimento: interceptação de requisições de analytics ativada');
+				}
+			});
+		</script>
+	</body>
+</html>
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+		
+		/* Variáveis de cores personalizadas */
+		--red-primary: #ff0000;
+		--red-dark: #8b0000;
+		--green-highlight: #33cc33;
+		--green-dark: #006600;
+		--green-bright: #00ff00;
+		--green-hover: #40dd40;
+		--blue-button: #29b6f6;
+		--blue-dark: #0277bd;
+		--blue-hover: #4fc3f7;
+		--blue-bright: #03a9f4;
+		--black-bg: #000000;
+		--white-text: #ffffff;
+	}
+	
+	*, *::before, *::after {
+		box-sizing: border-box;
+		contain: content; /* Melhora o CLS isolando o conteúdo */
+	}
+	
+	html {
+		font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		background: var(--black-bg);
+		scroll-behavior: smooth;
+		text-rendering: optimizeSpeed; /* Prioriza velocidade de renderização */
+	}
+	
+	body {
+		margin: 0;
+		padding: 0;
+		overflow-x: hidden;
+		line-height: 1.5;
+		color: var(--white-text);
+	}
+	
+	/* Otimizações para evitar CLS */
+	img, picture, svg, video {
+		max-width: 100%;
+		display: block;
+		height: auto;
+		contain: strict; /* Evita layout shifts */
+		width: auto;
+	}
+	
+	/* Otimização para imagens LCP */
+	img.hero-image, 
+	img.banner-image, 
+	img[data-lcp="true"] {
+		content-visibility: auto; /* Otimiza renderização */
+		contain-intrinsic-size: 1200px 600px; /* Reserva espaço */
+		will-change: transform; /* Hint para o browser */
+	}
+	
+	/* Acessibilidade - foco visível */
+	a:focus, button:focus, input:focus, select:focus, textarea:focus {
+		outline: 2px solid var(--blue-button);
+		outline-offset: 2px;
+	}
+	
+	/* Skip to content link para acessibilidade */
+	.skip-to-content {
+		position: absolute;
+		top: -40px;
+		left: 0;
+		background: var(--blue-button);
+		color: white;
+		padding: 8px;
+		z-index: 100;
+		transition: top 0.3s;
+	}
+	
+	.skip-to-content:focus {
+		top: 0;
+	}
+	
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+	
+	/* Otimização para fontes */
+	@font-face {
+		font-family: 'Montserrat';
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap; /* Evita FOUT/FOIT */
+		src: local('Montserrat'), local('Montserrat-Regular');
+	}
+	
+	@font-face {
+		font-family: 'Montserrat';
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap; /* Evita FOUT/FOIT */
+		src: local('Montserrat Bold'), local('Montserrat-Bold');
+	}
+</style>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000B18;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D2E4E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grad1)"/>
+  <!-- Avião estilizado -->
+  <path d="M600,400 L650,370 L700,400 L650,430 Z" fill="#ffffff" opacity="0.8"/>
+  <path d="M650,370 L670,350 L680,370 Z" fill="#ffffff" opacity="0.8"/>
+  <path d="M650,430 L670,450 L680,430 Z" fill="#ffffff" opacity="0.8"/>
+  
+  <!-- Mais alguns aviões menores em várias posições -->
+  <path d="M300,200 L330,185 L360,200 L330,215 Z" fill="#ffffff" opacity="0.6"/>
+  <path d="M800,600 L830,585 L860,600 L830,615 Z" fill="#ffffff" opacity="0.6"/>
+  <path d="M200,500 L230,485 L260,500 L230,515 Z" fill="#ffffff" opacity="0.5"/>
+  <path d="M900,300 L930,285 L960,300 L930,315 Z" fill="#ffffff" opacity="0.5"/>
+</svg> 

@@ -1,0 +1,27 @@
+{
+  "name": "aviator-app",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "build:prod": "NODE_ENV=production astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "astro check",
+    "clean": "rm -rf dist/",
+    "prebuild:prod": "npm run clean"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^4.15.11"
+  },
+  "devDependencies": {
+    "astro-compress": "^2.3.6",
+    "terser": "^5.39.0",
+    "typescript": "^5.8.2",
+    "vite-plugin-compression": "^0.5.1"
+  }
+}

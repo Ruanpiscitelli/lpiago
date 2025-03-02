@@ -1,0 +1,937 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Countdown from '../components/Countdown.astro';
+
+// Metadados otimizados para SEO
+const title = "Estratégias Aviator";
+const description = "Aprenda como lucrar de R$200 a R$400 por dia com nossa estratégia de análise no Aviator. 100% grátis, sem robôs ou sinais!";
+---
+
+<Layout 
+  title={title}
+  description={description}
+  image="/teste.avif"
+  type="website"
+>
+	<!-- Skip link para acessibilidade -->
+	<a href="#main-content" class="skip-to-content">Pular para o conteúdo</a>
+	
+	<main id="main-content">
+		<div id="dice-container" aria-hidden="true"></div>
+		<div class="container">
+			<div class="left-section">
+				<div class="background-elements" aria-hidden="true">
+					<!-- Elementos de fundo ficarão aqui -->
+				</div>
+				<div class="person-content">
+					<!-- Conteúdo relacionado à pessoa ficará aqui -->
+				</div>
+			</div>
+			<div class="right-section">
+				<div class="promo-box">
+					<p class="free-text">NÃO VOU TE COBRAR NADA, É 100% GRÁTIS</p>
+					
+					<h1 class="main-heading" 
+						id="lcp-element">
+						VOU TE ENSINAR COMO LUCRO <span class="highlight">DE R$200 A R$400 REAIS POR DIA</span> COM MINHA ESTRATÉGIA DE ANALISE!
+					</h1>
+					
+					<p class="description" 
+						id="description-element">
+						Isso <span class="red-text">NÃO É UM ROBÔ OU GRUPO DE SINAIS</span>, vou 
+						te ensinar dentro da Comunidade VIP o passo 
+						passo da minha estratégia que se você seguir seus 
+						ganhos serão como o da maioria que está lá 
+						dentro: <span class="bold-text">de R$200 a R$400 por dia com toda 
+						segurança!</span>
+					</p>
+					
+					<a href="https://t.me/estrategia_aviator" class="cta-button blue-cta" aria-label="Acessar o grupo no Telegram">
+						ACESSAR O GRUPO
+					</a>
+					
+					<p class="click-instruction">
+						Aperte no botão acima para 
+						<span class="red-text">participar do meu grupo!</span>
+					</p>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<p class="disclaimer">
+				Copyright 2023 © - Todos os Direitos Reservados.
+				<br>
+				Os resultados apresentados neste conteúdo não devem ser interpretados como uma promessa ou garantia de resultados. Os resultados podem variar de pessoa a pessoa. Seu nível de sucesso em alcançar os 
+				resultados com o uso de nossos produtos e informações depende do tempo que você dedica ao programa, técnicas utilizadas, conhecimento e habilidades diferentes. Como estes fatores diferem 
+				entre cada indivíduo, não podemos garantir o sucesso ou o nível de resultado, nem somos responsáveis por qualquer de suas ações. Todas as informações e produtos disponibilizados aqui são de boa-fé, em 
+				qualquer investimento existente, contém riscos e resultados e riscos variam de acordo com o mercado, precisamos que algumas ações possam ter perdas.
+				<span class="instagram">@IAGOMILIONARIO</span>
+			</p>
+		</footer>
+		
+		<!-- Exit Intent Popup -->
+		<div id="exitPopup" class="exit-popup">
+			<div class="exit-card">
+				<div class="exit-header">
+					<div class="exit-icon">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-2a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+						</svg>
+					</div>
+					<h2 class="exit-alert">ESPERE!</h2>
+				</div>
+				<div class="exit-message">
+					<p class="exit-headline">VOCÊ ESTÁ MESMO DEIXANDO R$400 DIÁRIOS ESCAPAREM PELOS SEUS DEDOS?</p>
+					<p>Mais de 327 pessoas já estão lucrando AGORA com esta estratégia que...</p>
+					<ul>
+						<li>Não exige investimento inicial</li>
+						<li>Funciona com apenas 30 minutos por dia</li>
+						<li>Tem resultados comprovados desde o primeiro dia</li>
+					</ul>
+					<p class="exit-last-chance">Esta pode ser sua ÚLTIMA CHANCE de transformar análises em lucro real!</p>
+				</div>
+				<div class="exit-actions">
+					<a href="https://t.me/+6Gn1XgIYQjc4ODQx" class="exit-read blue-cta">QUERO GANHAR R$400/DIA AGORA MESMO</a>
+					<a href="https://www.instagram.com/iagomilionario/" class="exit-mark-as-read" id="naoQueroLink">Não quero, obrigado.</a>
+					<p class="exit-disclaimer">Não se preocupe, continuará 100% GRÁTIS. Sem taxas escondidas.</p>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	/* CSS variables já definidas no Layout global */
+
+	:root {
+		--promo-box-width: 550px;
+		--promo-box-height: 600px;
+	}
+
+	.skip-to-content {
+		position: absolute;
+		left: -10000px;
+		top: auto;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		z-index: 9999;
+	}
+
+	.skip-to-content:focus {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: auto;
+		height: auto;
+		padding: 10px;
+		background: #e41e3f;
+		color: white;
+		border-bottom-right-radius: 8px;
+	}
+
+	main {
+		width: 100%;
+		position: relative;
+		color: white;
+		padding: 2rem 0;
+		overflow: hidden;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		/* Pré-reserva de espaço para a imagem de fundo para evitar layout shifts */
+		aspect-ratio: 16/9;
+		background-color: #050505; /* Cor de fallback enquanto a imagem carrega */
+	}
+
+	/* Background image com lazy loading controlado */
+	main::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: 
+			radial-gradient(50% 50% at 50% 50%, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.4) 100%),
+			linear-gradient(0deg, rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.2)),
+			url('/teste-960w.avif');
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-attachment: fixed;
+		z-index: -1;
+	}
+
+	@media (min-width: 960px) {
+		main::before {
+			background-image: 
+				radial-gradient(50% 50% at 50% 50%, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.4) 100%),
+				linear-gradient(0deg, rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.2)),
+				url('/teste.avif');
+		}
+	}
+
+	#dice-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+		pointer-events: none;
+	}
+
+	.dice {
+		position: absolute;
+		width: 80px;
+		height: 80px;
+		transform-style: preserve-3d;
+		opacity: 0.7;
+		will-change: transform; /* Optimization: Hint for browser to optimize transforms */
+	}
+
+	.cube {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		transform-style: preserve-3d;
+		animation: rotate 8s infinite linear;
+	}
+
+	.face {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: #c71f1f;
+		border-radius: 8px;
+		box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		backface-visibility: hidden; /* Optimization: Hide back face of elements */
+	}
+
+	.dot {
+		background-color: white;
+		border-radius: 50%;
+		box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.4);
+		position: absolute;
+		width: 14px;
+		height: 14px;
+	}
+
+	/* Dot positions for each face */
+	/* Face 1 - one central dot */
+	.one .dot {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Face 2 - two diagonal dots */
+	.two .dot:nth-child(1) {
+		top: 25%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.two .dot:nth-child(2) {
+		top: 75%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Face 3 - three diagonal dots */
+	.three .dot:nth-child(1) {
+		top: 25%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.three .dot:nth-child(2) {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.three .dot:nth-child(3) {
+		top: 75%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Face 4 - four corner dots */
+	.four .dot:nth-child(1) {
+		top: 25%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.four .dot:nth-child(2) {
+		top: 25%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+	.four .dot:nth-child(3) {
+		top: 75%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.four .dot:nth-child(4) {
+		top: 75%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Face 5 - five dots, four in corners and one in center */
+	.five .dot:nth-child(1) {
+		top: 25%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.five .dot:nth-child(2) {
+		top: 25%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+	.five .dot:nth-child(3) {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.five .dot:nth-child(4) {
+		top: 75%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.five .dot:nth-child(5) {
+		top: 75%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Face 6 - six dots, three on each side */
+	.six .dot:nth-child(1) {
+		top: 25%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.six .dot:nth-child(2) {
+		top: 25%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+	.six .dot:nth-child(3) {
+		top: 50%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.six .dot:nth-child(4) {
+		top: 50%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+	.six .dot:nth-child(5) {
+		top: 75%;
+		left: 25%;
+		transform: translate(-50%, -50%);
+	}
+	.six .dot:nth-child(6) {
+		top: 75%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+	}
+
+	/* 3D transformation for each face */
+	.front {
+		transform: translateZ(40px);
+	}
+	.back {
+		transform: rotateY(180deg) translateZ(40px);
+	}
+	.right {
+		transform: rotateY(90deg) translateZ(40px);
+	}
+	.left {
+		transform: rotateY(-90deg) translateZ(40px);
+	}
+	.top {
+		transform: rotateX(90deg) translateZ(40px);
+	}
+	.bottom {
+		transform: rotateX(-90deg) translateZ(40px);
+	}
+
+	@keyframes rotate {
+		0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+		100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg); }
+	}
+
+	.container {
+		width: 100%;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 80vh;
+	}
+
+	@media (min-width: 768px) {
+		.container {
+			flex-direction: row;
+			justify-content: space-between;
+		}
+	}
+
+	.promo-box {
+		background-color: rgba(0, 0, 0, 0.8);
+		border-radius: 15px;
+		padding: 30px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+		max-width: var(--promo-box-width);
+		width: 100%;
+		min-height: 500px; /* Altura mínima para evitar layout shifts */
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+
+	.main-heading {
+		color: white;
+		font-size: clamp(1.5rem, 4vw, 2.5rem);
+		font-weight: 700;
+		line-height: 1.2;
+		margin-bottom: 20px;
+		text-transform: uppercase;
+		font-family: 'Montserrat', sans-serif;
+	}
+
+	.highlight {
+		color: var(--blue-button);
+		font-weight: 800;
+	}
+
+	.description {
+		font-size: clamp(1rem, 3vw, 1.25rem);
+		line-height: 1.5;
+		margin-bottom: 25px;
+	}
+
+	.red-text {
+		color: var(--blue-button);
+		font-weight: 700;
+	}
+
+	.bold-text {
+		font-weight: 700;
+	}
+
+	.free-text {
+		background-color: var(--blue-button);
+		color: var(--white-text);
+		font-weight: 700;
+		text-align: center;
+		padding: 10px 18px;
+		border-radius: 30px;
+		margin-bottom: 20px;
+		font-size: clamp(0.875rem, 2.5vw, 1rem);
+		text-transform: uppercase;
+		display: inline-block;
+		align-self: center;
+		border: 1px solid var(--blue-dark);
+	}
+
+	.cta-button {
+		display: block;
+		background-color: var(--blue-button);
+		color: var(--white-text);
+		font-weight: 700;
+		text-align: center;
+		padding: 18px 32px;
+		border-radius: 8px;
+		text-decoration: none;
+		font-size: clamp(1rem, 3vw, 1.25rem);
+		margin: 20px 0;
+		text-transform: uppercase;
+		transition: all 0.3s ease;
+		border: 2px solid var(--blue-dark);
+		cursor: pointer;
+		box-shadow: 0 5px 15px rgba(3, 169, 244, 0.4);
+	}
+
+	.cta-button:hover, .cta-button:focus {
+		background-color: var(--blue-hover);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(3, 169, 244, 0.6);
+		border-color: var(--blue-dark);
+	}
+
+	.click-instruction {
+		text-align: center;
+		font-size: clamp(0.875rem, 2.5vw, 1rem);
+		margin-top: 15px;
+	}
+
+	.disclaimer {
+		font-size: 0.75rem;
+		color: rgba(255, 255, 255, 0.7);
+		text-align: center;
+		max-width: 900px;
+		margin: 40px auto 0;
+		line-height: 1.5;
+	}
+
+	.instagram {
+		display: block;
+		color: var(--blue-button);
+		font-weight: 700;
+		margin-top: 10px;
+	}
+
+	/* Exit Popup Styles */
+	.exit-popup {
+		position: fixed;
+		top: 0;
+		left: 0;
+			width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.85);
+		display: flex;
+			align-items: center;
+		justify-content: center;
+		z-index: 1000;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
+	}
+
+	.exit-popup.show {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.exit-card {
+		background-color: #111;
+		border-radius: 15px;
+		padding: 30px;
+		max-width: 550px;
+		width: 90%;
+		box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.exit-header {
+		display: flex;
+		align-items: center;
+		margin-bottom: 20px;
+		position: relative;
+	}
+
+	.exit-icon {
+		color: var(--blue-button);
+		width: 40px;
+		height: 40px;
+		margin-right: 15px;
+	}
+
+	.exit-alert {
+		color: var(--blue-button);
+		font-size: 1.8rem;
+		font-weight: 700;
+		margin: 0;
+		text-transform: uppercase;
+	}
+
+	.exit-close {
+		position: absolute;
+		top: -10px;
+		right: -10px;
+		background: transparent;
+		border: none;
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 1.5rem;
+		cursor: pointer;
+		padding: 5px;
+		transition: color 0.3s ease;
+	}
+
+	.exit-close:hover {
+		color: white;
+	}
+
+	.exit-headline {
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin-bottom: 15px;
+		color: white;
+		line-height: 1.3;
+	}
+
+	.exit-message {
+		margin-bottom: 25px;
+	}
+
+	.exit-message p {
+		margin-bottom: 15px;
+		line-height: 1.5;
+	}
+
+	.exit-message ul {
+		margin: 15px 0;
+		padding-left: 20px;
+	}
+
+	.exit-message li {
+		margin-bottom: 10px;
+		position: relative;
+		padding-left: 25px;
+	}
+
+	.exit-message li:before {
+		content: '✓';
+		color: var(--blue-button);
+		position: absolute;
+		left: 0;
+		font-weight: 700;
+	}
+
+	.exit-last-chance {
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: var(--blue-button);
+	}
+
+	.exit-actions {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.exit-read {
+		display: block;
+		width: 100%;
+		background-color: var(--blue-button);
+		color: var(--white-text);
+		text-align: center;
+		padding: 15px;
+		border-radius: 8px;
+		font-weight: 700;
+		text-decoration: none;
+		margin-bottom: 15px;
+		transition: all 0.3s ease;
+		border: 2px solid var(--blue-dark);
+	}
+	
+	.exit-read:hover {
+		background-color: var(--blue-hover);
+		transform: translateY(-2px);
+		border-color: var(--blue-dark);
+	}
+
+	.exit-mark-as-read {
+		color: rgba(255, 255, 255, 0.6);
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+		margin-bottom: 15px;
+	}
+
+	.exit-mark-as-read:hover {
+		color: white;
+		text-decoration: underline;
+	}
+
+	.exit-disclaimer {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.5);
+		text-align: center;
+		margin: 0;
+	}
+
+	footer {
+		margin-top: auto;
+		padding: 20px;
+	}
+
+	@media (max-width: 768px) {
+		.main-heading {
+			font-size: 1.5rem;
+		}
+		
+		.description {
+			font-size: 1rem;
+		}
+		
+		.cta-button {
+			padding: 12px 20px;
+			font-size: 1rem;
+		}
+		
+		.exit-card {
+			padding: 20px;
+		}
+		
+		.exit-alert {
+			font-size: 1.5rem;
+		}
+		
+		.exit-headline {
+			font-size: 1.1rem;
+		}
+	}
+
+	.cta-button.blue-cta {
+		background-color: var(--blue-button);
+		color: var(--white-text);
+		border: 2px solid var(--blue-dark);
+		font-weight: 800;
+		text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+		animation: pulse-blue 1.5s infinite;
+		position: relative;
+		z-index: 2;
+		overflow: hidden;
+	}
+	
+	.cta-button.blue-cta:before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		background: linear-gradient(
+			to bottom right,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(255, 255, 255, 0.3) 50%,
+			rgba(255, 255, 255, 0) 100%
+		);
+		transform: rotate(45deg);
+		z-index: -1;
+		animation: shine 3s infinite;
+	}
+	
+	@keyframes shine {
+		0% {
+			left: -50%;
+			top: -50%;
+		}
+		100% {
+			left: 100%;
+			top: 100%;
+		}
+	}
+	
+	@keyframes pulse-blue {
+		0% {
+			box-shadow: 0 0 0 0 rgba(41, 182, 246, 0.8);
+		}
+		70% {
+			box-shadow: 0 0 0 15px rgba(41, 182, 246, 0);
+		}
+		100% {
+			box-shadow: 0 0 0 0 rgba(41, 182, 246, 0);
+		}
+	}
+
+	.exit-read.blue-cta {
+		background-color: var(--blue-button);
+		color: var(--white-text);
+		border: 2px solid var(--blue-dark);
+		font-weight: 800;
+		text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+		animation: pulse-blue 1.5s infinite;
+	}
+	
+	.exit-read.blue-cta:hover {
+		background-color: var(--blue-hover);
+		box-shadow: 0 0 20px rgba(41, 182, 246, 0.8);
+	}
+
+	.cta-button.blue-cta:hover, .cta-button.blue-cta:focus {
+		background-color: var(--blue-hover);
+		box-shadow: 0 0 25px rgba(41, 182, 246, 0.9);
+		transform: translateY(-3px);
+	}
+</style>
+
+<script>
+	// Inicialização apenas após o carregamento do DOM
+	document.addEventListener('DOMContentLoaded', function() {
+		setupDiceAnimation();
+		setupExitIntent();
+	});
+
+	// Animação de dados otimizada
+	function setupDiceAnimation() {
+		const diceContainer = document.getElementById('dice-container');
+		if (!diceContainer) return;
+		
+		// Usar requestAnimationFrame para animações suaves
+		let animationFrameId;
+		const diceElements = [];
+		const maxDice = window.innerWidth > 768 ? 10 : 5;
+		
+		// Criar dados com delay para não bloquear a renderização
+		function createDiceWithDelay(index) {
+			if (index >= maxDice) return;
+			
+			setTimeout(() => {
+				const dice = document.createElement('div');
+				dice.className = 'dice';
+				
+				// Posicionar aleatoriamente
+				dice.style.left = `${Math.random() * 90 + 5}%`;
+				dice.style.top = `${Math.random() * 90 + 5}%`;
+				
+				// Cria o cubo e faces
+				const cube = document.createElement('div');
+				cube.className = 'cube';
+				
+				// Adicionar apenas as faces visíveis para economizar recursos
+				for (let i = 1; i <= 3; i++) {
+					const face = document.createElement('div');
+					face.className = `face ${['one', 'two', 'three'][i-1]}`;
+					
+					// Adicionar pontos ao dado
+					for (let j = 0; j < i; j++) {
+						const dot = document.createElement('div');
+						dot.className = 'dot';
+						face.appendChild(dot);
+					}
+					
+					cube.appendChild(face);
+				}
+				
+				dice.appendChild(cube);
+				diceContainer.appendChild(dice);
+				diceElements.push({
+					element: dice,
+					speed: Math.random() * 2 + 1,
+					direction: Math.random() > 0.5 ? 1 : -1,
+					position: {
+						x: parseFloat(dice.style.left),
+						y: parseFloat(dice.style.top)
+					}
+				});
+				
+				// Criar próximo dado
+				createDiceWithDelay(index + 1);
+			}, 200); // Criar com intervalo para não bloquear o thread principal
+		}
+		
+		// Iniciar criação de dados
+		createDiceWithDelay(0);
+		
+		// Animação otimizada usando requestAnimationFrame
+		function animateDice() {
+			diceElements.forEach(dice => {
+				// Mover com velocidade variável
+				dice.position.x += dice.speed * dice.direction * 0.05;
+				
+				// Reverter direção ao atingir os limites
+				if (dice.position.x > 95 || dice.position.x < 5) {
+					dice.direction *= -1;
+				}
+				
+				// Aplicar nova posição
+				dice.element.style.left = `${dice.position.x}%`;
+			});
+			
+			animationFrameId = requestAnimationFrame(animateDice);
+		}
+		
+		// Iniciar animação com delay para priorizar LCP
+		setTimeout(() => {
+			animationFrameId = requestAnimationFrame(animateDice);
+		}, 2000);
+		
+		// Limpar animação quando a página for fechada
+		window.addEventListener('beforeunload', () => {
+			if (animationFrameId) {
+				cancelAnimationFrame(animationFrameId);
+			}
+		});
+	}
+
+	// Popup de saída otimizado
+	function setupExitIntent() {
+		const exitPopup = document.getElementById('exitPopup');
+		// Se o elemento não existir, retornar sem executar
+		if (!exitPopup) return;
+		
+		// Verificar se já mostramos o popup nesta sessão
+		if (sessionStorage.getItem('exitPopupShown')) return;
+		
+		const closePopup = document.querySelector('.exit-close');
+		const naoQueroLink = document.getElementById('naoQueroLink');
+		
+		// Função centralizada para fechar o popup
+		function fecharPopup() {
+			exitPopup.style.opacity = '0';
+			setTimeout(() => {
+				exitPopup.style.visibility = 'hidden';
+			}, 300);
+			
+			// Registrar que o popup foi mostrado nesta sessão
+			sessionStorage.setItem('exitPopupShown', 'true');
+		}
+		
+		// Adicionar botão de fechar, se ainda não existir
+		if (!closePopup) {
+			const closeBtn = document.createElement('button');
+			closeBtn.className = 'exit-close';
+			closeBtn.innerHTML = '×';
+			closeBtn.setAttribute('aria-label', 'Fechar popup');
+			
+			const header = exitPopup.querySelector('.exit-header');
+			if (header) {
+				header.appendChild(closeBtn);
+				
+				// Adicionar evento de clique
+				closeBtn.addEventListener('click', fecharPopup);
+			}
+		} else {
+			closePopup.addEventListener('click', fecharPopup);
+		}
+		
+		// Evento para o link "Não quero"
+		if (naoQueroLink) {
+			naoQueroLink.addEventListener('click', function(e) {
+				// Não interrompe a navegação, apenas fecha o popup
+				fecharPopup();
+			});
+		}
+		
+		// Fechar ao clicar fora do card
+		exitPopup.addEventListener('click', function(e) {
+			if (e.target === exitPopup) {
+				fecharPopup();
+			}
+		});
+		
+		// Detectar intenção de saída
+		let showPopupTimeout;
+		
+		document.addEventListener('mouseout', function(e) {
+			// Verificar se o mouse saiu para cima da janela
+			if (e.clientY <= 5 && !sessionStorage.getItem('exitPopupShown')) {
+				clearTimeout(showPopupTimeout);
+				
+				// Pequeno delay para evitar acionamentos acidentais
+				showPopupTimeout = setTimeout(() => {
+					exitPopup.style.visibility = 'visible';
+					exitPopup.style.opacity = '1';
+				}, 300);
+			}
+		});
+		
+		// Cancelar se o mouse voltar para a página
+		document.addEventListener('mouseover', function() {
+			clearTimeout(showPopupTimeout);
+		});
+	}
+</script>
