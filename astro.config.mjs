@@ -96,5 +96,11 @@ export default defineConfig({
 				minifyURLs: true // Minifica URLs
 			}
 		})
-	]
+	],
+	server: {
+		port: 4321 // Porta para desenvolvimento
+	},
+	preview: {
+		port: 5000 // Porta diferente para preview
+	}
 });

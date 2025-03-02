@@ -4,15 +4,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npm run clean-ports && astro dev",
     "start": "astro dev",
     "build": "astro build",
     "build:prod": "NODE_ENV=production astro build",
-    "preview": "astro preview",
+    "preview": "npm run clean-ports && astro preview",
     "astro": "astro",
     "lint": "astro check",
     "clean": "rm -rf dist/",
-    "prebuild:prod": "npm run clean"
+    "prebuild:prod": "npm run clean",
+    "clean-ports": "kill $(lsof -t -i:4321-4330) 2>/dev/null || true"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
