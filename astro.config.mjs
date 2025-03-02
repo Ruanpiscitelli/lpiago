@@ -4,10 +4,8 @@ import compress from 'astro-compress';
 // https://astro.build/config
 export default defineConfig({
 	// Configuração para GitHub Pages
-	// Substitua SEU_USUARIO pelo seu nome de usuário do GitHub e NOME_DO_REPOSITORIO pelo nome do repositório
-	// Exemplo: site: 'https://ruanpiscitelli.github.io', base: '/aviator-app'
-	site: 'https://SEU_USUARIO.github.io',
-	base: '/NOME_DO_REPOSITORIO',
+	site: 'https://ruanpiscitelli.github.io',
+	base: '/lpiago',
 	
 	output: 'static',
 	build: {
@@ -48,7 +46,6 @@ export default defineConfig({
 			// Reduz tamanho do sourcemap enquanto mantém funcionalidade básica
 			sourcemap: 'hidden',
 		},
-		// Otimizações para imagens
 		plugins: []
 	},
 	// Plugins para otimizações adicionais
