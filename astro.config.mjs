@@ -3,9 +3,8 @@ import compress from 'astro-compress';
 
 // https://astro.build/config
 export default defineConfig({
-	// Configuração para GitHub Pages
-	site: 'https://ruanpiscitelli.github.io',
-	base: '/lpiago',
+	// Configuração para Netlify
+	site: process.env.SITE_URL || 'https://lpiago.netlify.app',
 	
 	output: 'static',
 	build: {
