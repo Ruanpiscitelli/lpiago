@@ -46,7 +46,10 @@ export default defineConfig({
 			sourcemap: 'hidden',
 		},
 		// Otimizações para imagens
-		plugins: []
+		plugins: [],
+		optimizeDeps: {
+			exclude: ['@rollup/rollup-linux-x64-gnu', '@rollup/rollup-darwin-arm64', '@rollup/rollup-darwin-x64']
+		}
 	},
 	// Plugins para otimizações adicionais
 	integrations: [

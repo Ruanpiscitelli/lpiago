@@ -19,18 +19,14 @@
     "@astrojs/check": "^0.9.4",
     "astro": "^4.15.11",
     "lightningcss": "^1.29.1",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "@rollup/wasm-node": "^4.9.0",
+    "rollup": "npm:@rollup/wasm-node"
   },
   "devDependencies": {
     "astro-compress": "^2.3.6",
     "terser": "^5.39.0",
     "typescript": "^5.8.2",
     "vite-plugin-compression": "^0.5.1"
-  },
-  "overrides": {
-    "rollup": "npm:@rollup/wasm-node",
-    "@rollup/rollup-linux-x64-gnu": "npm:@rollup/wasm-node",
-    "@rollup/rollup-darwin-arm64": "npm:@rollup/wasm-node",
-    "@rollup/rollup-darwin-x64": "npm:@rollup/wasm-node"
   }
 }
