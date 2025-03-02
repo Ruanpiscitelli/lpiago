@@ -46,6 +46,7 @@ export default defineConfig({
 			// Reduz tamanho do sourcemap enquanto mantém funcionalidade básica
 			sourcemap: 'hidden',
 		},
+		// Otimizações para imagens
 		plugins: []
 	},
 	// Plugins para otimizações adicionais
