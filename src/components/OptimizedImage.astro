@@ -1,0 +1,105 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  decoding?: 'async' | 'sync' | 'auto';
+  isLCP?: boolean;
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  class: className = '',
+  decoding = 'async',
+  isLCP = false
+} = Astro.props;
+
+// Determina o caminho base e a extensão
+const basePath = src.split('.').slice(0, -1).join('.');
+const extension = src.split('.').pop();
+
+// Determina os formatos disponíveis
+const formats = ['avif', 'webp', extension].filter((format, index, self) => 
+  format && self.indexOf(format) === index
+);
+
+// Gera URLs para os diferentes formatos
+const srcSet = {};
+formats.forEach(format => {
+  srcSet[format] = `${basePath}.${format}`;
+});
+
+// Se for imagem LCP, define fetchpriority como high e loading como eager
+const imagePriority = isLCP ? 'high' : fetchpriority;
+const imageLoading = isLCP ? 'eager' : loading;
+
+// Dimensões para srcset responsivo
+const sizes = isLCP 
+  ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+  : '(max-width: 768px) 100vw, 50vw';
+
+// Gera srcset para diferentes tamanhos (apenas para imagens importantes)
+const generateSrcSet = (format) => {
+  if (!isLCP) return undefined;
+  const widths = [width/2, width, width*1.5].map(w => Math.floor(w));
+  return widths.map(w => `${basePath}-${w}w.${format} ${w}w`).join(', ');
+};
+---
+
+<picture>
+  {formats.includes('avif') && (
+    <source 
+      srcset={isLCP ? generateSrcSet('avif') : srcSet.avif}
+      sizes={isLCP ? sizes : undefined}
+      type="image/avif" 
+    />
+  )}
+  {formats.includes('webp') && (
+    <source 
+      srcset={isLCP ? generateSrcSet('webp') : srcSet.webp}
+      sizes={isLCP ? sizes : undefined}
+      type="image/webp" 
+    />
+  )}
+  <img 
+    src={src} 
+    alt={alt} 
+    width={width} 
+    height={height} 
+    loading={imageLoading} 
+    fetchpriority={imagePriority}
+    decoding={decoding}
+    class={className}
+    sizes={isLCP ? sizes : undefined}
+  />
+</picture>
+
+<style>
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    will-change: transform;
+    contain: layout paint;
+  }
+</style>
+
+{isLCP && (
+  <script is:inline define:vars={{ src: srcSet.avif || srcSet.webp || src }}>
+    const preloadLink = document.createElement('link');
+    preloadLink.rel = 'preload';
+    preloadLink.href = src;
+    preloadLink.as = 'image';
+    preloadLink.fetchPriority = 'high';
+    document.head.appendChild(preloadLink);
+  </script>
+)} 

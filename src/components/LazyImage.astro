@@ -1,0 +1,62 @@
+import OptimizedImage from './OptimizedImage.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+}
+
+const { src, alt, width, height, class: className = '' } = Astro.props;
+
+<div class:list={["lazy-image-container", className]}>
+  <OptimizedImage 
+    src={src} 
+    alt={alt} 
+    width={width} 
+    height={height} 
+    loading="lazy" 
+    fetchpriority="low"
+    decoding="async"
+  />
+</div>
+
+<style>
+  .lazy-image-container {
+    position: relative;
+    overflow: hidden;
+    background-color: #f0f0f0; /* Placeholder color */
+  }
+</style>
+
+<script>
+  // Detecta suporte a IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    const lazyImageContainers = document.querySelectorAll('.lazy-image-container');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const container = entry.target;
+          const lazyImage = container.querySelector('img');
+          
+          if (lazyImage && lazyImage.dataset.src) {
+            lazyImage.src = lazyImage.dataset.src;
+            delete lazyImage.dataset.src;
+          }
+          
+          // Pare de observar depois de carregar
+          imageObserver.unobserve(container);
+        }
+      });
+    }, {
+      rootMargin: '200px 0px', // Carrega imagens 200px antes de entrarem na viewport
+      threshold: 0.01
+    });
+
+    lazyImageContainers.forEach(container => {
+      imageObserver.observe(container);
+    });
+  }
+</script> 
