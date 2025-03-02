@@ -19,6 +19,7 @@
     "astro": "^4.15.11"
   },
   "devDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.34.9",
     "astro-compress": "^2.3.6",
     "terser": "^5.39.0",
     "typescript": "^5.8.2",
