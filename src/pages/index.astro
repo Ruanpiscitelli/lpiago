@@ -495,39 +495,47 @@ const description = "Aprenda como lucrar de R$200 a R$400 por dia com nossa estr
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100%;
-		height: 100%;
+		right: 0;
+		bottom: 0;
+		width: 100vw;
+		height: 100vh;
 		background-color: rgba(0, 0, 0, 0.85);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		z-index: 1000;
+		z-index: 99999;
 		opacity: 0;
 		visibility: hidden;
-		transition: opacity 0.3s ease, visibility 0.3s ease;
-		backdrop-filter: blur(5px);
-		-webkit-backdrop-filter: blur(5px);
-	}
-
-	.exit-card {
-		background-color: #111;
-		border-radius: 15px;
-		padding: 30px;
-		max-width: 550px;
-		width: 90%;
-		box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		transform: translateY(0);
-		transition: transform 0.3s ease;
+		transition: opacity 0.3s ease;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+		will-change: opacity;
+		pointer-events: none;
 	}
 
 	.exit-popup.show {
 		opacity: 1;
 		visibility: visible;
+		pointer-events: auto;
+	}
+
+	.exit-card {
+		position: relative;
+		background-color: #111;
+		border-radius: 15px;
+		padding: 30px;
+		max-width: 550px;
+		width: 90%;
+		margin: 20px;
+		box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		transform: scale(0.95);
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		will-change: transform;
 	}
 
 	.exit-popup.show .exit-card {
-		transform: translateY(0);
+		transform: scale(1);
 	}
 
 	.exit-header {
@@ -866,78 +874,52 @@ const description = "Aprenda como lucrar de R$200 a R$400 por dia com nossa estr
 	// Popup de saída otimizado
 	function setupExitIntent() {
 		const exitPopup = document.getElementById('exitPopup');
-		// Se o elemento não existir, retornar sem executar
-		if (!exitPopup) return;
+		const closeButtons = exitPopup?.querySelectorAll('[data-close]');
 		
-		// Verificar se já mostramos o popup nesta sessão
-		if (sessionStorage.getItem('exitPopupShown')) return;
+		if (!exitPopup || sessionStorage.getItem('exitPopupShown')) return;
 		
-		const closePopup = document.querySelector('.exit-close');
-		const naoQueroLink = document.getElementById('naoQueroLink');
+		let showPopupTimeout;
+		let mouseY = 0;
+		let lastY = 0;
 		
-		// Função centralizada para fechar o popup
-		function fecharPopup() {
-			exitPopup.style.opacity = '0';
-			setTimeout(() => {
-				exitPopup.style.visibility = 'hidden';
-			}, 300);
-			
-			// Registrar que o popup foi mostrado nesta sessão
+		function showPopup() {
+			if (sessionStorage.getItem('exitPopupShown')) return;
+			exitPopup.classList.add('show');
 			sessionStorage.setItem('exitPopupShown', 'true');
 		}
 		
-		// Adicionar botão de fechar, se ainda não existir
-		if (!closePopup) {
-			const closeBtn = document.createElement('button');
-			closeBtn.className = 'exit-close';
-			closeBtn.innerHTML = '×';
-			closeBtn.setAttribute('aria-label', 'Fechar popup');
+		function hidePopup() {
+			exitPopup.classList.remove('show');
+		}
+		
+		function handleMouseMove(e) {
+			mouseY = e.clientY;
 			
-			const header = exitPopup.querySelector('.exit-header');
-			if (header) {
-				header.appendChild(closeBtn);
-				
-				// Adicionar evento de clique
-				closeBtn.addEventListener('click', fecharPopup);
-			}
-		} else {
-			closePopup.addEventListener('click', fecharPopup);
-		}
-		
-		// Evento para o link "Não quero"
-		if (naoQueroLink) {
-			naoQueroLink.addEventListener('click', function(e) {
-				// Não interrompe a navegação, apenas fecha o popup
-				fecharPopup();
-			});
-		}
-		
-		// Fechar ao clicar fora do card
-		exitPopup.addEventListener('click', function(e) {
-			if (e.target === exitPopup) {
-				fecharPopup();
-			}
-		});
-		
-		// Detectar intenção de saída
-		let showPopupTimeout;
-		
-		document.addEventListener('mouseout', function(e) {
-			// Verificar se o mouse saiu para cima da janela
-			if (e.clientY <= 5 && !sessionStorage.getItem('exitPopupShown')) {
+			// Detecta movimento rápido para cima
+			if (mouseY < lastY && mouseY < 5 && !sessionStorage.getItem('exitPopupShown')) {
 				clearTimeout(showPopupTimeout);
-				
-				// Pequeno delay para evitar acionamentos acidentais
-				showPopupTimeout = setTimeout(() => {
-					exitPopup.style.visibility = 'visible';
-					exitPopup.style.opacity = '1';
-				}, 300);
+				showPopupTimeout = setTimeout(showPopup, 300);
 			}
+			
+			lastY = mouseY;
+		}
+		
+		// Event Listeners
+		document.addEventListener('mousemove', handleMouseMove, { passive: true });
+		
+		closeButtons?.forEach(button => {
+			button.addEventListener('click', hidePopup);
 		});
 		
-		// Cancelar se o mouse voltar para a página
-		document.addEventListener('mouseover', function() {
-			clearTimeout(showPopupTimeout);
-		});
+		// Cleanup
+		return () => {
+			document.removeEventListener('mousemove', handleMouseMove);
+			closeButtons?.forEach(button => {
+				button.removeEventListener('click', hidePopup);
+			});
+		};
 	}
+	
+	// Initialize
+	document.addEventListener('astro:page-load', setupExitIntent);
 </script>
