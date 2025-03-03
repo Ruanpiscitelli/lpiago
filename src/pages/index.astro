@@ -495,11 +495,11 @@ const description = "Aprenda como lucrar de R$200 a R$400 por dia com nossa estr
 		position: fixed;
 		top: 0;
 		left: 0;
-			width: 100%;
+		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.85);
 		display: flex;
-			align-items: center;
+		align-items: center;
 		justify-content: center;
 		z-index: 1000;
 		opacity: 0;
@@ -507,11 +507,6 @@ const description = "Aprenda como lucrar de R$200 a R$400 por dia com nossa estr
 		transition: opacity 0.3s ease, visibility 0.3s ease;
 		backdrop-filter: blur(5px);
 		-webkit-backdrop-filter: blur(5px);
-	}
-
-	.exit-popup.show {
-		opacity: 1;
-		visibility: visible;
 	}
 
 	.exit-card {
@@ -522,6 +517,17 @@ const description = "Aprenda como lucrar de R$200 a R$400 por dia com nossa estr
 		width: 90%;
 		box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
 		border: 1px solid rgba(255, 255, 255, 0.1);
+		transform: translateY(0);
+		transition: transform 0.3s ease;
+	}
+
+	.exit-popup.show {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.exit-popup.show .exit-card {
+		transform: translateY(0);
 	}
 
 	.exit-header {

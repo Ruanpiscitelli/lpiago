@@ -33,3 +33,5 @@ pnpm-debug.log*
 # arquivos de backup
 *.tar.gz
 lpiago/ 
+# Local Netlify folder
+.netlify
