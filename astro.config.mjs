@@ -4,7 +4,7 @@ import compress from 'astro-compress';
 // https://astro.build/config
 export default defineConfig({
 	// Configuração para Netlify
-	site: process.env.SITE_URL || 'https://lpiago.netlify.app',
+	site: process.env.SITE_URL || 'https://iago1lp.netlify.app',
 	
 	output: 'static',
 	build: {

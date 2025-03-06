@@ -43,6 +43,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+[[headers]]
+  for = "/*.avif"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/avif"
+    Content-Disposition = "inline"
+
 # Headers de segurança para todas as páginas
 [[headers]]
   for = "/*"
@@ -96,13 +103,8 @@
   for = "/*"
   [headers.values]
     Content-Encoding = "br"
-    Cache-Control = "public, max-age=2592000"
-
-# Configuração específica para HTML
-[[headers]]
-  for = "/*.html"
-  [headers.values]
     Content-Type = "text/html; charset=UTF-8"
+    Cache-Control = "public, max-age=2592000"
 
 # Configuração específica para servir arquivos estáticos comprimidos
 [[headers]]

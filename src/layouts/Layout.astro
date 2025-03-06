@@ -16,7 +16,7 @@ const {
 } = Astro.props;
 
 // Site URL fallback para casos onde Astro.site é undefined (ambiente de produção)
-const siteUrl = Astro.site || new URL("https://aviator-app.vercel.app/");
+const siteUrl = Astro.site || new URL("https://iago1lp.netlify.app/");
 
 // Garante que a URL canônica seja uma string completa com fallback seguro
 let canonicalURLString;
@@ -264,7 +264,6 @@ try {
 						if (typeof resource === 'string' && 
 							(resource.includes('google-analytics.com') || 
 							 resource.includes('analytics.google.com') || 
-							 resource.includes('api.iagomilionario.com/g/collect') ||
 							 resource.includes('stats.g.doubleclick.net'))) {
 						
 							// Modificar as opções para usar 'no-cors' e evitar erros CORS
@@ -284,6 +283,19 @@ try {
 							}
 						}
 						
+						// Redirecionar chamadas para api.iagomilionario.com através do proxy
+						if (typeof resource === 'string' && resource.includes('api.iagomilionario.com')) {
+							// Extrair o caminho após api.iagomilionario.com
+							const path = resource.split('api.iagomilionario.com')[1];
+							
+							// Criar nova URL usando o proxy
+							const proxyUrl = `/proxy-api${path}`;
+							
+							console.debug('Redirecionando para proxy:', proxyUrl);
+							
+							return originalFetch(proxyUrl, options);
+						}
+						
 						// Para todas as outras requisições, manter o comportamento normal
 						return originalFetch.apply(this, arguments);
 					};
@@ -301,19 +313,31 @@ try {
 							if (typeof url === 'string' && 
 								(url.includes('google-analytics.com') || 
 								 url.includes('analytics.google.com') || 
-								 url.includes('api.iagomilionario.com/g/collect') ||
 								 url.includes('stats.g.doubleclick.net'))) {
 							
 								// Silenciar erros para estas requisições
 								xhr.addEventListener('error', function(e) {
 									e.stopPropagation();
 									console.debug('Interceptando erro XMLHttpRequest de analytics em ambiente local');
-									return false;
-								});
+								}, false);
 							}
 							
-							// Chamar o método original
-							return originalOpen.apply(xhr, arguments);
+							// Redirecionar chamadas XMLHttpRequest para api.iagomilionario.com
+							if (typeof url === 'string' && url.includes('api.iagomilionario.com')) {
+								// Extrair o caminho após api.iagomilionario.com
+								const path = url.split('api.iagomilionario.com')[1];
+								
+								// Criar nova URL usando o proxy
+								const proxyUrl = `/proxy-api${path}`;
+								
+								console.debug('Redirecionando XMLHttpRequest para proxy:', proxyUrl);
+								
+								// Chamar o método original com a URL do proxy
+								return originalOpen.call(this, method, proxyUrl);
+							}
+							
+							// Para todas as outras requisições, manter o comportamento normal
+							return originalOpen.apply(this, arguments);
 						};
 						
 						return xhr;
